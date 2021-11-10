@@ -49,6 +49,7 @@ const App = () => {
         const randomNote = whichId === 0 ? 'middle0' : `${whichBar}${whichId}`  
         setLastNote(whichId)
         setShown(randomNote)
+        console.log({ whichId, lastNote, whichBar, randomNote })
       }
   
       if (event.keyCode === 191) {
