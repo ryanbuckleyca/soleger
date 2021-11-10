@@ -42,9 +42,10 @@ const App = () => {
         setAnswer(false)
         const whichBar = ['treble', 'bass'][Math.floor(Math.random() * 2)]
   
-        let whichId = Math.floor(Math.random() * steps)
         // @TODO: don't select Do or So if they're shown
-        while (whichId === lastNote) { whichId = Math.floor(Math.random() * steps) }
+        let whichId
+        do { whichId = Math.floor(Math.random() * steps) } 
+        while (whichId === lastNote)
   
         const randomNote = whichId === 0 ? 'middle0' : `${whichBar}${whichId}`  
         setLastNote(whichId)
@@ -53,6 +54,7 @@ const App = () => {
       }
   
       if (event.keyCode === 191) {
+        console.log({ lastNote, setAnswer, answer })
         setAnswer(answer => !answer)
       }
     }
