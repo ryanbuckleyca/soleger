@@ -34,33 +34,35 @@ const App = () => {
 
   const state = {shown, answer, showDos, showSos, setAnswer, showAll}
 
-  useEffect(() => {
-    const keyTrigger = (event) => {
-      if (event.repeat) return false
-  
-      if (event.shiftKey) {
-        setAnswer(false)
-        const whichBar = ['treble', 'bass'][Math.floor(Math.random() * 2)]
-  
-        // @TODO: don't select Do or So if they're shown
-        let whichId
-        do { whichId = Math.floor(Math.random() * steps) } 
-        while (whichId === lastNote)
-  
-        const randomNote = whichId === 0 ? 'middle0' : `${whichBar}${whichId}`  
-        setLastNote(whichId)
-        setShown(randomNote)
-        console.log({ whichId, lastNote, whichBar, randomNote })
-      }
-  
-      if (event.keyCode === 191) {
-        console.log({ lastNote, setAnswer, answer })
-        setAnswer(answer => !answer)
-      }
+  const keyTrigger = (event) => {
+    if (event.repeat) return false
+
+    if (event.shiftKey) {
+      setAnswer(false)
+      const whichBar = ['treble', 'bass'][Math.floor(Math.random() * 2)]
+
+      // @TODO: don't select Do or So if they're shown
+      let whichId
+      do { whichId = Math.floor(Math.random() * steps) } 
+      while (whichId === lastNote)
+      setLastNote(whichId)
+
+      const randomNote = whichId === 0 ? 'middle0' : `${whichBar}${whichId}`  
+      setShown(randomNote)
+      console.log({ whichId, lastNote, whichBar, randomNote })
     }
+
+    if (event.keyCode === 191) {
+      console.log({ lastNote, setAnswer, answer })
+      setAnswer(answer => !answer)
+    }
+  }
+
+
+  useEffect(() => {
     document.addEventListener("keydown", (e) => keyTrigger(e))
     return document.removeEventListener("keydown", (e) => keyTrigger(e))
-  }, [lastNote])
+  }, [])
 
   const barBuilder = ({ steps, type }) => {
     const array = {
