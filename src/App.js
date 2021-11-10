@@ -29,6 +29,7 @@ const App = () => {
   const [answer, setAnswer] = useState(false)
   const [showDos, setShowDos] = useState(false)
   const [showSos, setShowSos] = useState(false)
+  const [showAll, setShowAll] = useState(false)
   const [lastNote, setLastNote] = useState()
 
   const keyTrigger = (event) => {
@@ -53,7 +54,7 @@ const App = () => {
   }
 
 
-  const state = {shown, answer, showDos, showSos, setAnswer}
+  const state = {shown, answer, showDos, showSos, setAnswer, showAll}
 
   useEffect(() => {
     document.addEventListener("keydown", (e) => keyTrigger(e))
@@ -76,7 +77,7 @@ const App = () => {
 
   return (
     <div className="App" style={{ height: '100vh' }}>
-      <Menu setShowDos={setShowDos} setShowSos={setShowSos} />
+      <Menu setShowDos={setShowDos} setShowSos={setShowSos} setShowAll={setShowAll} />
 
       <div id="treble" style={{...staffStyles, backgroundImage: "url('/treble-clef.svg')", flexDirection: 'column-reverse'}}>
         {barBuilder({steps, type: 'treble'}).map((bar) => bar)}
@@ -91,7 +92,7 @@ const App = () => {
   )
 }
 
-const Menu = ({ setShowDos, setShowSos }) => (
+const Menu = ({ setShowDos, setShowSos, setShowAll }) => (
   <div style={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center', margin: '3vh 1vh' }}>
   <div style={{ display: 'flex', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
     <span style={{ background: 'yellow', padding: '1%' }}>press <b>Shift</b> to change the note</span>
@@ -99,9 +100,17 @@ const Menu = ({ setShowDos, setShowSos }) => (
     <span style={{ background: 'yellow', padding: '1%' }}>press <b>?</b> to reveal the answer</span>
   </div>
   <div style={{ display: 'flex', width: '100%', justifyContent: 'center', alignItems: 'center', marginTop: '1vh' }}>
-    <button onClick={()=>setShowDos(value => !value)}>toggle Dos</button>
+    <button onClick={()=>{
+      setShowAll(false)
+      setShowDos(value => !value)
+    }}>toggle Dos</button>
     &nbsp;•&nbsp;
-    <button onClick={()=>setShowSos(value => !value)}>toggle Sos</button>
+    <button onClick={()=>{
+      setShowAll(false)
+      setShowSos(value => !value)
+    }}>toggle Sos</button>
+    &nbsp;•&nbsp;
+    <button onClick={()=>setShowAll(value => !value)}>toggle All</button>
   </div>
   </div>
 )
